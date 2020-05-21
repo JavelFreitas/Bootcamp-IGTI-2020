@@ -2,7 +2,7 @@
 
 This project was made to show what I have learned of pure HTML, CSS and JavaScript.
 
-## Summary
+# Summary
 
 * [Requirements](#requirements)
 * [Current State](#current-state)
