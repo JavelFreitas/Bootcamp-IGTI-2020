@@ -1,0 +1,36 @@
+.app {
+
+    max-width: 70vw;
+    padding: 4px;
+}
+
+.color-input {
+
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
+    max-width: 70vw;
+}
+
+#form1Label1 {
+    color: red;
+}
+
+#form1Label2 {
+    color: rgb(0, 255, 0);
+}
+
+#form1Label3 {
+    color: blue;
+}
+
+.readonlyInput {
+    max-width: 40px;
+}
+
+.color-output{
+    width: 200px;
+    height: 200px;
+    background-color: red;
+}
+
