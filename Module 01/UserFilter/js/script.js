@@ -1,14 +1,23 @@
 let allUsers = [];
 let filteredUsers = [];
 
+let inputFilter = 0;
+let buttonFilter = 0;
+
+
 window.addEventListener('load', start)
 
 
 function start(){ //pegar todos os elementos html
-    const inputFilter = document.querySelector("input#inputText");
-    inputFilter.addEventListener("keyup", filterUsers);
-    fetchUsers();
+    inputFilter = document.querySelector("input#inputText");
+    buttonFilter = document.querySelector("button#inputButton");
+    console.log(buttonFilter);
+    
+    inputFilter.addEventListener('keyup', handleFilterEvent);
+    buttonFilter.addEventListener('click', handleFilterEvent);
+    // fetchUsers();
 }
+
 
 async function fetchUsers(){
 
@@ -31,24 +40,38 @@ async function fetchUsers(){
     getStatistics();
 }
 
-function filterUsers(event){
-    if(event.key === "Enter") console.log(event);
+function handleFilterEvent(event){
+    if(event.key === 'Enter' || event.type === 'click'){
+        console.log(event);
+        
+        filterUsers(inputFilter.value);
+
+    }
 
     
 }
 
-function getStatistics(){
-    let [male, female] = genderStatistics();
-    // let agesSum, agesAverage = ageStatistics();
+function filterUsers(textInput){
+    console.log(textInput);
     
-    console.log(male);
-    console.log(female);
+}
+
+
+function getStatistics(){
+
+    const [male, female] = genderStatistics();
+    const [agesSum, agesAverage] = ageStatistics();
+    
+    // console.log(male);
+    // console.log(female);
+    // console.log(agesSum, agesAverage);
+    return {male, female, agesSum, agesAverage};
 }
 
 function genderStatistics(){
     let male = 0;
     let female = 0;
-    console.log(filteredUsers);
+    // console.log(filteredUsers);
     
     filteredUsers.forEach(user => {
         if(user.gender === 'female'){
@@ -58,4 +81,15 @@ function genderStatistics(){
         }
     });
     return [male ,female];
+}
+
+function ageStatistics(){
+    let acc = 0;
+    const agesSum = filteredUsers.reduce((acc, cur) => {
+        return acc += cur.age;
+    }, 0);
+
+    const agesAverage = agesSum/filteredUsers.length;
+    
+    return [agesSum, agesAverage];
 }
