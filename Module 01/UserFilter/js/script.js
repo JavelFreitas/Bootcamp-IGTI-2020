@@ -5,31 +5,36 @@ let inputFilter = 0;
 let buttonFilter = 0;
 
 
+let maleQuantity = 0;
+let femaleQuantity = 0;
+let filteredAgesSum = 0;
+let filteredAverageAge = 0;
+
 window.addEventListener('load', start)
 
 
-function start(){ //pegar todos os elementos html
+function start() { //pegar todos os elementos html
     inputFilter = document.querySelector("input#inputText");
     buttonFilter = document.querySelector("button#inputButton");
-    console.log(buttonFilter);
-    
+
     inputFilter.addEventListener('keyup', handleFilterEvent);
     buttonFilter.addEventListener('click', handleFilterEvent);
-    // fetchUsers();
+
+    fetchUsers();
 }
 
+async function fetchUsers() {
 
-async function fetchUsers(){
-
-    let userData = await fetch('https://randomuser.me/api/?seed=javascript&results=100&nat=BR&noinfo'); 
+    let userData = await fetch('https://randomuser.me/api/?seed=javascript&results=100&nat=BR&noinfo');
     let json = await userData.json();
     json = json.results;
 
     allUsers = json.map(user => {
-        const {name, picture, dob, gender} = user;
+        const { name, picture, dob, gender } = user;
         return {
             firstName: name.first,
             lastName: name.last,
+            fullname: `${name.first} ${name.last}`,
             profilePicture: picture.thumbnail,
             age: dob.age,
             gender
@@ -40,56 +45,56 @@ async function fetchUsers(){
     getStatistics();
 }
 
-function handleFilterEvent(event){
-    if(event.key === 'Enter' || event.type === 'click'){
-        console.log(event);
-        
-        filterUsers(inputFilter.value);
+function handleFilterEvent(event) {
+    if (event.key === 'Enter' || event.type === 'click') {
 
+        filterUsers(inputFilter.value);
+        getStatistics();
     }
 
-    
+
 }
 
-function filterUsers(textInput){
-    console.log(textInput);
-    
+function filterUsers(textInput) {
+
+    let textInputLower = textInput.toLowerCase();
+
+    filteredUsers = allUsers.filter(user => { 
+        return (user.fullname.toLowerCase().indexOf(textInputLower) !== -1)
+    });
 }
 
 
-function getStatistics(){
+function getStatistics() {
 
-    const [male, female] = genderStatistics();
-    const [agesSum, agesAverage] = ageStatistics();
-    
-    // console.log(male);
-    // console.log(female);
-    // console.log(agesSum, agesAverage);
-    return {male, female, agesSum, agesAverage};
+    [maleQuantity, femaleQuantity] = genderStatistics();
+    [filteredAgesSum, filteredAverageAge] = ageStatistics();
+
 }
 
-function genderStatistics(){
+function genderStatistics() {
     let male = 0;
     let female = 0;
-    // console.log(filteredUsers);
-    
+
     filteredUsers.forEach(user => {
-        if(user.gender === 'female'){
+        if (user.gender === 'female') {
             female++;
-        }else if(user.gender === 'male'){
+        } else if (user.gender === 'male') {
             male++;
         }
     });
-    return [male ,female];
+    return [male, female];
 }
 
-function ageStatistics(){
+function ageStatistics() {
     let acc = 0;
     const agesSum = filteredUsers.reduce((acc, cur) => {
         return acc += cur.age;
     }, 0);
 
-    const agesAverage = agesSum/filteredUsers.length;
+    let average = agesSum / filteredUsers.length;
     
+    const agesAverage = parseFloat(average.toFixed(2));
+
     return [agesSum, agesAverage];
 }
