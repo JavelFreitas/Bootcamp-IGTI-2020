@@ -9,6 +9,17 @@
   align-items: center;
 }
 
+.allInfo {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.allInfo p{
+    margin: 5px;
+}
+
+
 .displayFilteredInfo {
   padding: 15px;
   display: flex;
@@ -29,18 +40,25 @@ h1 {
   align-items: center;
 }
 
-.userProfileFullname{
+.userProfileFullname {
+  display: flex;
+  margin: 5px;
+  align-self: flex-start;
+}
+
+.userData {
     display: flex;
-    margin: 10px;
-    align-self: flex-start;
-}
-
-.userFiltered {
+    flex-direction: column;
   margin: 12px;
+  margin-right: 10px;
+  border-style: groove;
+  border-color: antiquewhite;
+  border-radius: 12px;
+  padding: 10px;
 }
 
-img{
-    border-radius: 50%;
+img {
+  border-radius: 50%;
 }
 
 .input {

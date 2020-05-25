@@ -3,13 +3,15 @@ let filteredUsers = [];
 
 let inputFilter = 0;
 let buttonFilter = 0;
-let divInfoFiltered = 0;
 let divUserFiltered = 0;
+let divInfoFiltered = 0;
 
 let maleQuantity = 0;
 let femaleQuantity = 0;
 let filteredAgesSum = 0;
 let filteredAverageAge = 0;
+
+let numberFormat = 0;
 
 window.addEventListener('load', start)
 
@@ -22,6 +24,8 @@ function start() {
 
     inputFilter.addEventListener('keyup', handleFilterEvent);
     buttonFilter.addEventListener('click', handleFilterEvent);
+
+    numberFormat = Intl.NumberFormat('pt-BR');
 
     fetchUsers();
 }
@@ -60,10 +64,31 @@ function handleFilterEvent(event) {
         console.log(filteredUsers);
 
         renderFilteredUsers();
-
+        renderFilteredInfo();
 
     }
 
+
+}
+function renderFilteredInfo(){
+    let allInfo = '';
+    if(filteredUsers.length === 0){
+        divInfoFiltered.innerHTML = `<div>
+            <h2>Nenhuma informação disponível</h2>
+        </div>`;
+        return;
+    }
+
+    allInfo = `<div class='numberFiltered'><h3>Estatísticas</h3></div>
+    <div class='allInfo'>
+    <p>Sexo Masculino: ${maleQuantity}</p>
+    <p>Sexo Feminino: ${femaleQuantity}</p>
+    <p>Soma das idades: ${filteredAgesSum}</p>
+    <p>Média das idades: ${filteredAverageAge}</p>
+    </div>
+    `;
+
+    divInfoFiltered.innerHTML = allInfo;
 
 }
 
@@ -72,11 +97,10 @@ function renderFilteredUsers() {
 
     if(usersQtt === 0){
         divUserFiltered.innerHTML = `<div>
-            <h2>Nenhum usuário filtrado</h2>
+            <h2>Nenhum usuário encontrado</h2>
         </div>`;
         return;
     }
-
 
     let usersHTML = `<div class='numberFiltered'> <h3>${usersQtt} usuário(s) encontrado(s).</h3></div>`
 
@@ -129,15 +153,19 @@ function genderStatistics() {
 }
 
 function ageStatistics() {
-    let acc = 0;
-    const agesSum = filteredUsers.reduce((acc, cur) => {
+    let agesSum = filteredUsers.reduce((acc, cur) => {
         return acc += cur.age;
     }, 0);
 
     let average = agesSum / filteredUsers.length;
 
     const agesAverage = parseFloat(average.toFixed(2));
-
+    agesSum = formatNumber(agesSum);
     return [agesSum, agesAverage];
+}
+
+function formatNumber(number){
+    return numberFormat.format(number);
+
 }
 
