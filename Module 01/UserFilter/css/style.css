@@ -1,0 +1,62 @@
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.allFilteredUsers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.displayFilteredInfo {
+  padding: 15px;
+  display: flex;
+}
+
+h1 {
+  margin: 10vw;
+  align-self: center;
+}
+
+.userRenderedContainer .userRendered {
+  padding: 2px;
+}
+
+.userProfile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.userProfileFullname{
+    display: flex;
+    margin: 10px;
+    align-self: flex-start;
+}
+
+.userFiltered {
+  margin: 12px;
+}
+
+img{
+    border-radius: 50%;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+}
+
+.inputButton {
+  height: 6vh;
+  border-radius: 20px;
+}
+
+.inputText {
+  border-radius: 20px;
+  padding-left: 10px;
+  height: 5vh;
+  width: 90vw;
+  background-color: blanchedalmond;
+}

@@ -5,18 +5,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="../css/style.css">
     </head>
 
     <body>
         <div class="app">
             <h1>Pesquisa de Usuários</h1>
             <div class="input">
-                <input type="text" id="inputText">
-                <button type="button" id="inputButton" value="Enter">
+                <input type="text" class="inputText" id="inputText">
+                <button type="button" class="inputButton" id="inputButton">Enter</button>
             </div>
             <div class="displayFilteredInfo">
-                <div id="userFiltered"></div>
-                <div id="infoFiltered"></div>
+                <div class="userData" id="userFiltered">
+                    <h2>Users</h2>
+                </div>
+                <div class="userData" id="infoFiltered">
+                    <h2>Info</h2>
+                </div>
             </div>
         </div>
         <script src="../js/script.js"></script>
