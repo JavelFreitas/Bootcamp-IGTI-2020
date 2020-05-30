@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "test": "jest"
+  },
+  "name": "bootcamp-igti",
+  "description": "Projects of my first bootcamp.",
+  "version": "1.0.0",
+  "main": "Module_02/BrazilianStatesCities/main.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node": "^14.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavelFreitas/Bootcamp-IGTI-2020.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JavelFreitas/Bootcamp-IGTI-2020/issues"
+  },
+  "homepage": "https://github.com/JavelFreitas/Bootcamp-IGTI-2020#readme"
+}
