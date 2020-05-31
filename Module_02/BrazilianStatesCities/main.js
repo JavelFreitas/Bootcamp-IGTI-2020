@@ -112,8 +112,17 @@ async function numberOfCitiesByStates(req, res) {
                 orderedStates.splice(5);
             }
             console.log(orderedStates.length);
-            
             console.log(orderedStates);
+            
+            let totalNumber = 0;
+            orderedStates.forEach(state => {
+                totalNumber += state.totalCities;
+            })
+
+            
+            console.log(totalNumber);
+            console.log(orderedStates);
+            
             res.send(orderedStates);
         }));
     });
