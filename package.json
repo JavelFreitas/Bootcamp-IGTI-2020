@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "brstates": "nodemon --experimental-modules ./Module_02/BrazilianStatesCities/main.js"
   },
   "name": "bootcamp-igti",
   "description": "Projects of my first bootcamp.",
