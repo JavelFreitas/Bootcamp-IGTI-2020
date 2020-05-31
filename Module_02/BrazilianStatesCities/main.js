@@ -59,7 +59,10 @@ async function getCitiesByState(state, id){
     }
     
     orderedCities = orderByNameLengthAlphabetical(orderedCities);
-
+    // console.log(state);
+    // console.log(orderedCities);
+    
+    
     return orderedCities[0];
 }
 
@@ -120,9 +123,9 @@ async function numberOfCitiesByStates(req, res) {
             })
 
             
-            console.log(totalNumber);
+            console.log(`summed cities : ${totalNumber}`);
             console.log(orderedStates);
-            
+
             res.send(orderedStates);
         }));
     });
@@ -133,7 +136,6 @@ function namesOfCitiesByState(req, res) {
         if (err) throw err;
 
         let states = returnJSON(data);
-        console.log(req);
         
         let nameOfCitiesByState = states.map(async (state) => {
             return getCitiesByState(state.Sigla, req.params.id).then(cities => {
@@ -143,23 +145,8 @@ function namesOfCitiesByState(req, res) {
         });
         Promise.all(nameOfCitiesByState).then(arrCities => {
             console.log(arrCities);
+            res.send(arrCities);
         });
-        
-        // Promise.all(numberOfCitiesByState).then((arrStates => {
-        //     let orderedStates = orderByTotalCities(arrStates);
-        //     if(req.params.id == 'most'){
-                
-        //         orderedStates.reverse();
-        //         orderedStates.splice(5);
-        //         console.log(orderedStates);
-        //     }else if(req.params.id == 'less'){
-        //         orderedStates.splice(5);
-        //     }
-        //     console.log(orderedStates.length);
-            
-        //     console.log(orderedStates);
-        //     res.send(orderedStates);
-    //     }));
     });
 }
 // console.log(countStates());
