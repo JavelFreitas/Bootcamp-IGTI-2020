@@ -23,7 +23,6 @@ function readAplicationFiles() {
 
 }
 
-
 function createStateFile(state, cities) {
     const stateCities = cities.filter(city => city.Estado === state.ID);
 
@@ -34,21 +33,20 @@ function createStateFile(state, cities) {
         });
 }
 
+function returnJSON(data){
+    return JSON.parse(data.toString());
+}
+
 async function countStates() {
-    let data = fs.readFileSync('Module_02/BrazilianStatesCities/Original_Files/Estados.json');
+    let allStates = fs.readFileSync('Module_02/BrazilianStatesCities/Original_Files/Estados.json');
 
-    let states = JSON.parse(data.toString());
-
-    return states.length;
+    return returnJSON(allStates).length;
 }
 
 async function countCities(state){
-    
-    let data = fs.readFileSync(`Module_02/BrazilianStatesCities/EachStateFiles/${state}.json`);
+    let cities = fs.readFileSync(`Module_02/BrazilianStatesCities/EachStateFiles/${state}.json`);
 
-    let cities = JSON.parse(data.toString());
-
-    return cities.length;  
+    return returnJSON(cities).length;  
 }
 
 // console.log(countStates());
