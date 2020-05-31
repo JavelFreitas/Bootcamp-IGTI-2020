@@ -49,8 +49,27 @@ async function countCities(state){
     return returnJSON(cities).length;  
 }
 
+function orderByNameLength(allNames){
+    return allNames.sort((a, b) => {
+        if (a.Nome.length < b.Nome.length) return -1;
+        if (a.Nome.length > b.Nome.length) return 1;
+        return 0;
+    });
+}
+
+function orderByTotalCities(allStates){
+    return allStates.sort((a, b) => {
+        if (a.totalCities < b.totalCities) return -1;
+        if (a.totalCities > b.totalCities) return 1;
+        return 0;
+    })
+
+}
+
 // console.log(countStates());
 // console.log(countCities('CE'));
+
+// same length and alphabetical sorting
 
 
 
