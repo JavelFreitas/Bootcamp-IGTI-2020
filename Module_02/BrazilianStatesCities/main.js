@@ -49,13 +49,25 @@ async function countCities(state) {
     return returnJSON(cities).length;
 }
 
-async function getCitiesByState(state){
+async function getCitiesByState(state, id){
     let cities = fs.readFileSync(`Module_02/BrazilianStatesCities/EachStateFiles/${state}.json`);
     
     cities = returnJSON(cities);
     let orderedCities = orderByNameLength(cities);
+    if(id == 'biggest'){
+        orderedCities.reverse();
+    }
+    
+    orderedCities = orderByNameLengthAlphabetical(orderedCities);
 
-    console.log(orderedCities);
+    return orderedCities[0];
+}
+
+function orderByNameLengthAlphabetical(allNames) {
+    return allNames.sort((a, b) => {
+        if (a.Nome.length == b.Nome.length) return a.Nome.localeCompare(b.Nome);
+        return 0;
+    });
 }
 
 function orderByNameLength(allNames) {
@@ -112,10 +124,11 @@ function namesOfCitiesByState(req, res) {
         if (err) throw err;
 
         let states = returnJSON(data);
+        console.log(req);
         
         let nameOfCitiesByState = states.map(async (state) => {
-            return countCities(state).then(number => {
-                return { state: `${state.Sigla}`, totalCities: number }
+            return getCitiesByState(state.Sigla, req.params.id).then(cities => {
+                return { city: `${cities.Nome}`, state: `${state.Sigla}` }
             });
             
         });
@@ -145,14 +158,15 @@ function namesOfCitiesByState(req, res) {
 
 // same length and alphabetical sorting
 
-getCitiesByState('CE');
+let a = getCitiesByState('CE', 'biggest');
+console.log(a);
 
 
 app.get('/citiesByState/(:id)?', (req, res) => {
     numberOfCitiesByStates(req, res);
 });
 
-app.get('/nameOfCities/', (req, res) => {
+app.get('/nameOfCities/:id', (req, res) => {
     namesOfCitiesByState(req, res);
 })
 
