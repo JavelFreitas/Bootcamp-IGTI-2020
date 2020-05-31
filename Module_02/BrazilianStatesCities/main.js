@@ -145,24 +145,75 @@ function namesOfCitiesByState(req, res) {
         });
         Promise.all(nameOfCitiesByState).then(arrCities => {
             console.log(arrCities);
+
             res.send(arrCities);
         });
     });
 }
+
+function orderByCityLength(allNames) {
+    return allNames.sort((a, b) => {
+        if (a.city.length < b.city.length) return -1;
+        if (a.city.length > b.city.length) return 1;
+        return 0;
+    });
+}
+
+function orderByCityLengthAlphabetical(allNames) {
+    return allNames.sort((a, b) => {
+        if (a.city.length == b.city.length) return a.city.localeCompare(b.city);
+        return 0;
+    });
+}
+
+function biggestSmallestName(req, res) {
+    fs.readFile('Module_02/BrazilianStatesCities/Original_Files/Estados.json', (err, data) => {
+        if (err) throw err;
+
+        let states = returnJSON(data);
+        
+        let nameOfCitiesByState = states.map(async (state) => {
+            return getCitiesByState(state.Sigla, req.params.id).then(cities => {
+                return { city: `${cities.Nome}`,len: `${cities.Nome.length}` , state: `${state.Sigla}` }
+            });
+            
+        });
+        Promise.all(nameOfCitiesByState).then(arrCities => {
+            arrCities = orderByCityLength(arrCities);
+            console.log(arrCities);
+
+            arrCities = orderByCityLengthAlphabetical(arrCities);
+
+
+            if(req.params.id == 'biggest'){
+                arrCities.reverse();
+            }
+
+            console.log(arrCities);
+
+            res.send(arrCities[0]);
+        });
+    });
+}
+
+
 // console.log(countStates());
-// console.log(countCities('CE'));
-
-// same length and alphabetical sorting
-
-let a = getCitiesByState('CE', 'biggest');
-console.log(a);
+// countCities('CE').then(console.log);
+// let a = getCitiesByState('CE', 'biggest');
+// console.log(a);
 
 
-app.get('/citiesByState/(:id)?', (req, res) => {
+
+
+app.get('/lastQuestion/:id', (req, res) => { // 7:biggest, 8:smallest
+    biggestSmallestName(req, res);
+})
+
+app.get('/citiesByState/(:id)?', (req, res) => {// 3:most, 4:less, add:all.
     numberOfCitiesByStates(req, res);
 });
 
-app.get('/nameOfCities/:id', (req, res) => {
+app.get('/nameOfCities/:id', (req, res) => {// 5:biggest, 6:smallest
     namesOfCitiesByState(req, res);
 })
 
