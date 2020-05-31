@@ -33,7 +33,7 @@ function createStateFile(state, cities) {
         });
 }
 
-function returnJSON(data){
+function returnJSON(data) {
     return JSON.parse(data.toString());
 }
 
@@ -43,13 +43,22 @@ async function countStates() {
     return returnJSON(allStates).length;
 }
 
-async function countCities(state){
+async function countCities(state) {
     let cities = fs.readFileSync(`Module_02/BrazilianStatesCities/EachStateFiles/${state}.json`);
 
-    return returnJSON(cities).length;  
+    return returnJSON(cities).length;
 }
 
-function orderByNameLength(allNames){
+async function getCitiesByState(state){
+    let cities = fs.readFileSync(`Module_02/BrazilianStatesCities/EachStateFiles/${state}.json`);
+    
+    cities = returnJSON(cities);
+    let orderedCities = orderByNameLength(cities);
+
+    console.log(orderedCities);
+}
+
+function orderByNameLength(allNames) {
     return allNames.sort((a, b) => {
         if (a.Nome.length < b.Nome.length) return -1;
         if (a.Nome.length > b.Nome.length) return 1;
@@ -57,7 +66,7 @@ function orderByNameLength(allNames){
     });
 }
 
-function orderByTotalCities(allStates){
+function orderByTotalCities(allStates) {
     return allStates.sort((a, b) => {
         if (a.totalCities < b.totalCities) return -1;
         if (a.totalCities > b.totalCities) return 1;
@@ -66,13 +75,86 @@ function orderByTotalCities(allStates){
 
 }
 
+async function numberOfCitiesByStates(req, res) {
+    fs.readFile('Module_02/BrazilianStatesCities/Original_Files/Estados.json', (err, data) => {
+        if (err) throw err;
+
+        let states = returnJSON(data);
+        console.log(states);
+
+        let numberOfCitiesByState = states.map(async (state) => {
+            return countCities(state.Sigla).then(number => {
+                return { state: `${state.Sigla}`, totalCities: number }
+            });
+
+        });
+
+        Promise.all(numberOfCitiesByState).then((arrStates => {
+            let orderedStates = orderByTotalCities(arrStates);
+            if(req.params.id == 'most'){
+                
+                orderedStates.reverse();
+                orderedStates.splice(5);
+                console.log(orderedStates);
+            }else if(req.params.id == 'less'){
+                orderedStates.splice(5);
+            }
+            console.log(orderedStates.length);
+            
+            console.log(orderedStates);
+            res.send(orderedStates);
+        }));
+    });
+}
+
+function namesOfCitiesByState(req, res) {
+    fs.readFile('Module_02/BrazilianStatesCities/Original_Files/Estados.json', (err, data) => {
+        if (err) throw err;
+
+        let states = returnJSON(data);
+        
+        let nameOfCitiesByState = states.map(async (state) => {
+            return countCities(state).then(number => {
+                return { state: `${state.Sigla}`, totalCities: number }
+            });
+            
+        });
+        Promise.all(nameOfCitiesByState).then(arrCities => {
+            console.log(arrCities);
+        });
+        
+        // Promise.all(numberOfCitiesByState).then((arrStates => {
+        //     let orderedStates = orderByTotalCities(arrStates);
+        //     if(req.params.id == 'most'){
+                
+        //         orderedStates.reverse();
+        //         orderedStates.splice(5);
+        //         console.log(orderedStates);
+        //     }else if(req.params.id == 'less'){
+        //         orderedStates.splice(5);
+        //     }
+        //     console.log(orderedStates.length);
+            
+        //     console.log(orderedStates);
+        //     res.send(orderedStates);
+    //     }));
+    });
+}
 // console.log(countStates());
 // console.log(countCities('CE'));
 
 // same length and alphabetical sorting
 
+getCitiesByState('CE');
 
 
+app.get('/citiesByState/(:id)?', (req, res) => {
+    numberOfCitiesByStates(req, res);
+});
+
+app.get('/nameOfCities/', (req, res) => {
+    namesOfCitiesByState(req, res);
+})
 
 app.get('/buildFiles', (_, res) => {
     readAplicationFiles();
@@ -81,14 +163,14 @@ app.get('/buildFiles', (_, res) => {
 
 app.get('/totalOfStates', (_, res) => {
     countStates().then(
-        (numberOfStates) => res.send(`${numberOfStates}`) 
+        (numberOfStates) => res.send(`${numberOfStates}`)
     );
 });
 
 app.get('/numberOfCities/:state', (req, res) => {
     countCities(req.params.state).then(
         (totalCities) => res.send(`${totalCities}`)
-    ); 
+    );
 });
 
 
