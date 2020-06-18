@@ -29,3 +29,11 @@ Introduction to NodeJs
 2. Practical Challenge
 
     [Grade CRUD](https://github.com/JavelFreitas/IGTI-module2-challange)
+
+## Module 3
+```
+Introduction to React
+```
+1. Practical Task
+
+    [Net Salary (CLT-2020)](https://github.com/JavelFreitas/practical-challange-module3)
