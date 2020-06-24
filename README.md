@@ -37,3 +37,7 @@ Introduction to React
 1. Practical Task
 
     [Net Salary (CLT-2020)](https://github.com/JavelFreitas/practical-task-module3-IGTI)
+
+2. Practical Challenge
+
+    [Compound interest calculator](https://github.com/JavelFreitas/practical-challange-module3-IGTI)
