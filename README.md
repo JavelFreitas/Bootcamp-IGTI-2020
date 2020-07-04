@@ -41,3 +41,12 @@ Introduction to React
 2. Practical Challenge
 
     [Compound interest calculator](https://github.com/JavelFreitas/practical-challange-module3-IGTI)
+
+# Module 4
+```
+Introduction to Git, Github and Heroku
+```
+
+1. Practical Task
+
+    [Bank api](https://github.com/JavelFreitas/practical-task-module4-IGTI)
