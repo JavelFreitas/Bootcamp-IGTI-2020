@@ -2,7 +2,7 @@
 Projects of my first bootcamp.
 
 * The projects are divided by Modules 
-* Each module has 2 projects: a Practical Task and a Practical Challange
+* Each module has 2 projects: a Practical Task and a Practical Challenge
 
 
 ## Module 1
@@ -50,3 +50,9 @@ Introduction to Git, Github and Heroku
 1. Practical Task
 
     [Bank api](https://github.com/JavelFreitas/practical-task-module4-IGTI)
+
+2. Practical Challenge
+
+    [Front-end](https://github.com/JavelFreitas/practical-challenge-module4-frontend)
+
+    [Back-end](https://github.com/JavelFreitas/practical-challenge-module4-backend)
